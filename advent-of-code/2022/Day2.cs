@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace aoc_2022
+﻿namespace aoc._2022
 {
-    internal static class Helpers
+    internal class Day2
     {
-        public static List<string> ReadInput(int day)
+        public static void Day2Part1()
         {
-            var path = $@"C:\Users\jiach\Documents\GitRepos\Visual Studio\Playground\aoc-2022\aoc-2022\Inputs\Day{day}.txt";
-            var lines = File.ReadAllLines(path).ToList();
-            return lines;
+            var lines = Utilities.ReadInput(2);
+            var scoreTotal = 0;
+            foreach (var line in lines)
+            {
+                scoreTotal += RockPaperScizzorsSolver(line);
+            }
+            Console.WriteLine(scoreTotal);
+        }
+
+        public static void Day2Part2()
+        {
+            var lines = Utilities.ReadInput(2);
+            var scoreTotal = 0;
+            foreach (var line in lines)
+            {
+                scoreTotal += RockPaperScizzorsSolverPart2(line);
+            }
+            Console.WriteLine(scoreTotal);
         }
 
         public static int RockPaperScizzorsSolver(string line)
@@ -114,19 +123,5 @@ namespace aoc_2022
             { "Y", 3 }, // Draw
             { "Z", 6 }  // Win
         };
-
-        public static Dictionary<char, int> createAlphabetDict()
-        {
-            Dictionary<char, int> dict = new Dictionary<char, int>();
-            for (char c = 'a'; c <= 'z'; c++)
-            {
-                dict.Add(c, c - 96);
-            }
-            for (char c = 'A'; c <= 'Z'; c++)
-            {
-                dict.Add(c, c - 38); // 'A' starts with value of 27
-            }
-            return dict;
-        }
     }
 }
