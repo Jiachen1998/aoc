@@ -49,5 +49,20 @@
             }
             return a;
         }
+
+        /// <summary>
+        /// Checks if all elements in a list are the same.
+        /// Same functionality as List.Distinct().Count() == 1 but faster with early exits
+        /// </summary>
+        internal static bool CheckSameElements<T>(List<T> list)
+        {
+            if (list is null || list.Count == 0) return false;
+            var first = list[0];
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (!first.Equals(list[i])) return false;
+            }
+            return true;
+        }
     }
 }

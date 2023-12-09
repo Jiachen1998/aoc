@@ -16,7 +16,7 @@
             foreach (var line in _lines)
             {
                 var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
-                sum += CalculateNext(nums);
+                sum += CalculateNextElemRecursive(nums);
             }
             return sum;
         }
@@ -28,65 +28,34 @@
             foreach (var line in _lines)
             {
                 var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
-                var thisSum = CalculatePrevious(nums);
+                var thisSum = CalculatePrevElemRecursive(nums);
                 sum += thisSum;
             }
             return sum;
         }
 
-        internal static int CalculateNext(List<int> nums)
+        internal static int CalculateNextElemRecursive(List<int> nums)
         {
-            var finalValues = new List<int>() { nums.Last() };
-            var currentList = nums;
-            var nextList = currentList;
-
-            // Calculate down all the sublists until they are a row of the same nums
-            while(currentList.Distinct().Count() > 1)
-            {
-                nextList = CalculateSubList(currentList);
-                currentList = nextList;
-                finalValues.Add(currentList.Last());
-            }
-
-            // Add the last number of each sublist
-            return finalValues.Sum();
-        }
-
-        internal static int CalculatePrevious(List<int> nums)
-        {
-            var firstElems = new List<int>();
-            var currentList = nums;
-            var nextList = currentList;
-
-            while (currentList.Distinct().Count() > 1)
-            {
-                firstElems.Add(currentList.First());
-                nextList = CalculateSubList(currentList);
-                currentList = nextList;
-            }
-            firstElems.Add(currentList.First());
-            var prevElems = new List<int>();
-            firstElems.Reverse();
-
-            // Iteratively calculate prev element of each sublist
-            // Prev Elem = First elem - Prev elem of prev sublist
-            for (int i = 0; i < firstElems.Count; i++)
-            {
-                var thisSublistFirst = firstElems[i];
-                var prevSublistPrev = i == 0 ? 0 : prevElems[i - 1];
-                prevElems.Add(thisSublistFirst - prevSublistPrev);
-            }
-            return prevElems.Last();
-        }
-
-        internal static List<int> CalculateSubList(List<int> nums)
-        {
+            // Base Case: All values are zero
+            if (Utilities.CheckSameElements(nums) && nums[0] == 0) return 0;
             var subList = new List<int>();
             for (int i = 0; i < nums.Count - 1; i++)
             {
                 subList.Add(nums[i + 1] - nums[i]);
             }
-            return subList;
+            return nums.Last() + CalculateNextElemRecursive(subList);
+        }
+
+        internal static int CalculatePrevElemRecursive(List<int> nums)
+        {
+            // Base Case: All values are zero
+            if (Utilities.CheckSameElements(nums) && nums[0] == 0) return 0;
+            var subList = new List<int>();
+            for (int i = 0; i < nums.Count - 1; i++)
+            {
+                subList.Add(nums[i + 1] - nums[i]);
+            }
+            return nums.First() - CalculatePrevElemRecursive(subList);
         }
     }
 }
