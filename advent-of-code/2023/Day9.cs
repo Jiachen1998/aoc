@@ -8,11 +8,7 @@
 
         internal static int Part1()
         {
-            // Extract sublists of deltas until they are all the same values
-            // Bubble up the addition of each sublist until you apply this to top-level
-
             var sum = 0;
-
             foreach (var line in _lines)
             {
                 var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
@@ -24,7 +20,6 @@
         internal static int Part2()
         {
             var sum = 0;
-
             foreach (var line in _lines)
             {
                 var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
@@ -36,26 +31,22 @@
 
         internal static int CalculateNextElemRecursive(List<int> nums)
         {
-            // Base Case: All values are zero
             if (Utilities.CheckSameElements(nums) && nums[0] == 0) return 0;
-            var subList = new List<int>();
-            for (int i = 0; i < nums.Count - 1; i++)
-            {
-                subList.Add(nums[i + 1] - nums[i]);
-            }
-            return nums.Last() + CalculateNextElemRecursive(subList);
+            return nums.Last() + CalculateNextElemRecursive(CalculateSublist(nums));
         }
 
         internal static int CalculatePrevElemRecursive(List<int> nums)
         {
-            // Base Case: All values are zero
             if (Utilities.CheckSameElements(nums) && nums[0] == 0) return 0;
+            return nums.First() - CalculatePrevElemRecursive(CalculateSublist(nums));
+        }
+
+        private static List<int> CalculateSublist(List<int> nums)
+        {
             var subList = new List<int>();
             for (int i = 0; i < nums.Count - 1; i++)
-            {
                 subList.Add(nums[i + 1] - nums[i]);
-            }
-            return nums.First() - CalculatePrevElemRecursive(subList);
+            return subList;
         }
     }
 }
