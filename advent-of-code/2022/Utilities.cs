@@ -8,7 +8,5 @@
             var lines = File.ReadAllLines(path).ToList();
             return lines;
         }
-
-        
     }
 }
