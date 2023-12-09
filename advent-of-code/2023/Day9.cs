@@ -9,23 +9,14 @@
         internal static int Part1()
         {
             var sum = 0;
-            foreach (var line in _lines)
-            {
-                var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
-                sum += CalculateNextElemRecursive(nums);
-            }
+            foreach (var line in _lines) sum += CalculateNextElemRecursive(line.Split(' ').Select(li => int.Parse(li)).ToList());
             return sum;
         }
 
         internal static int Part2()
         {
             var sum = 0;
-            foreach (var line in _lines)
-            {
-                var nums = line.Split(' ').Select(li => int.Parse(li)).ToList();
-                var thisSum = CalculatePrevElemRecursive(nums);
-                sum += thisSum;
-            }
+            foreach (var line in _lines) sum += CalculatePrevElemRecursive(line.Split(' ').Select(li => int.Parse(li)).ToList());
             return sum;
         }
 
@@ -44,8 +35,7 @@
         private static List<int> CalculateSublist(List<int> nums)
         {
             var subList = new List<int>();
-            for (int i = 0; i < nums.Count - 1; i++)
-                subList.Add(nums[i + 1] - nums[i]);
+            for (int i = 0; i < nums.Count - 1; i++) subList.Add(nums[i + 1] - nums[i]);
             return subList;
         }
     }
