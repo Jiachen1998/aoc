@@ -4,7 +4,7 @@ var clock = new Stopwatch();
 
 
 clock.Start();
-Console.WriteLine($"Answer: {aoc._2023.Day9.Part2()}");
+Console.WriteLine($"Answer: {aoc._2023.Day13.Part1()}");
 clock.Stop();
 
 Console.WriteLine($"Time: {clock.ElapsedMilliseconds}ms");
