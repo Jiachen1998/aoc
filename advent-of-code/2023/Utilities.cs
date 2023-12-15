@@ -153,6 +153,26 @@
             return colArray;
         }
 
+        internal static void SetRow<T>(T[,] grid, int row, T[] values)
+        {
+            int cols = grid.GetLength(1);
+
+            for (int i = 0; i < cols; i++)
+            {
+                grid[row, i] = values[i];
+            }
+        }
+
+        internal static void SetCol<T>(T[,] grid, int col, T[] values)
+        {
+            int rows = grid.GetLength(0);
+
+            for (int i = 0; i < rows; i++)
+            {
+                grid[i, col] = values[i];
+            }
+        }
+
         /// <summary>
         /// Extracts subset of columns given two indices, inclusive
         /// </summary>
@@ -214,6 +234,39 @@
             return a.SequenceEqual(b);
         }
 
+        internal static bool Compare2DArray<T>(T[,] a, T[,] b)
+        {
+            if (a.GetLength(0) != b.GetLength(0) || a.GetLength(1) != b.GetLength(1))
+            {
+                return false;
+            }
+
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                {
+                    if (!a[i, j].Equals(b[i, j]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        internal static T[,] DeepCopy2DArray<T>(T[,] a)
+        {
+            var copy = new T[a.GetLength(0) , a.GetLength(1)];
+            for (int i = 0; i <a.GetLength(0); i++)
+            {
+                for (int j = 0; j < a.GetLength(1); j++)
+                {
+                    copy[i, j] = a[i, j];
+                }
+            }
+            return copy;
+        }
+
         internal static void PrintGrid<T>(T[,] grid)
         {
             int rows = grid.GetLength(0);
@@ -227,6 +280,24 @@
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
+        }
+
+        internal static T[,] RotateClockwise<T>(T[,] grid)
+        {
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+            T[,] rotatedGrid = new T[cols, rows];
+
+            for (int i = 0; i < cols; i++)
+            {
+                for (int j = 0; j < rows; j++)
+                {
+                    rotatedGrid[i, j] = grid[rows - j - 1, i];
+                }
+            }
+
+            return rotatedGrid;
         }
     }
 }
