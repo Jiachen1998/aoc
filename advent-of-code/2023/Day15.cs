@@ -10,9 +10,7 @@
             long totalSum = 0;
             var components = Input.Split(',');
             foreach (var c in components)
-            {
                 totalSum += HashAlgo(c);
-            }
             return totalSum;
         }
 
@@ -33,15 +31,12 @@
                 // If = the number afterwards is focal length and add to boccs
                 if (equal)
                 {
-                    var focL = int.Parse(c.Substring(equalIndex + 1, c.Length - (equalIndex + 1)));
+                    var focL = int.Parse(c.Split("=")[1]);
                     var lens = (label, focL);
 
                     // For a new box, initialise the list
-                    var exists = boxDict.TryGetValue(boxNumber, out var list);
-                    if (!exists)
-                    {
+                    if (!boxDict.TryGetValue(boxNumber, out var list))
                         boxDict[boxNumber] = new List<(string, int)> { lens };
-                    }
                     else
                     {
                         // Existing box, check if this lens exists
