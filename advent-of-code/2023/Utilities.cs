@@ -65,7 +65,6 @@
             return true;
         }
 
-
         internal static int CalculateManhattanDistance((int x, int y) start, (int x, int y) end)
         {
             return Math.Abs(start.x - end.x) + Math.Abs(start.y - end.y);
@@ -298,6 +297,11 @@
             }
 
             return rotatedGrid;
+        }
+
+        internal static (int, int) SumCoords((int, int) a, (int, int) b)
+        {
+            return (a.Item1 + b.Item1, a.Item2 + b.Item2);
         }
     }
 }

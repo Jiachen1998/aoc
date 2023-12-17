@@ -30,10 +30,10 @@
 
         private static Dictionary<char, (int, int)> _dirMap = new Dictionary<char, (int, int)>
         {
-            { 'N', new (-1, 0) },
-            { 'E', new (0, 1) },
-            { 'S', new (1, 0) },
-            { 'W', new (0, -1) }
+            { 'N', (-1, 0) },
+            { 'E', (0, 1) },
+            { 'S', (1, 0) },
+            { 'W', (0, -1) }
         };
 
         internal static int Part1()

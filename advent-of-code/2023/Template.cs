@@ -6,12 +6,12 @@
         private static readonly string Input = "";
         private static List<string> _lines = Utilities.StringToLines(Input);
 
-        internal static int Part1()
+        internal static long Part1()
         {
             return 0;
         }
 
-        internal static int Part2()
+        internal static long Part2()
         {
             return 0;
         }

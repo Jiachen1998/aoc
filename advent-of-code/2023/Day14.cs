@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-
-namespace aoc._2023
+﻿namespace aoc._2023
 {
     internal static class Day14
     {
