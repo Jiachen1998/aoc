@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using aoc.Shared;
 
 namespace aoc._2023
 {

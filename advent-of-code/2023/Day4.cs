@@ -1,4 +1,6 @@
-﻿namespace aoc._2023
+﻿using aoc.Shared;
+
+namespace aoc._2023
 {
     internal static class Day4
     {

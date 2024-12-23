@@ -1,4 +1,4 @@
-﻿namespace aoc._2023
+﻿namespace aoc.Shared
 {
     internal static class Utilities
     {
@@ -255,8 +255,8 @@
 
         internal static T[,] DeepCopy2DArray<T>(T[,] a)
         {
-            var copy = new T[a.GetLength(0) , a.GetLength(1)];
-            for (int i = 0; i <a.GetLength(0); i++)
+            var copy = new T[a.GetLength(0), a.GetLength(1)];
+            for (int i = 0; i < a.GetLength(0); i++)
             {
                 for (int j = 0; j < a.GetLength(1); j++)
                 {
