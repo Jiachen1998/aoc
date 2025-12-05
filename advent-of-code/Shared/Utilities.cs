@@ -2,6 +2,68 @@
 {
     internal static class Utilities
     {
+        /// <summary>
+        /// Reads an input file from the Inputs folder for a given year and day.
+        /// </summary>
+        /// <param name="year">The year (e.g., 2024, 2025)</param>
+        /// <param name="day">The day number (e.g., 1, 2, 3)</param>
+        /// <param name="useTest">If true, reads Day{day}Test.txt, otherwise reads Day{day}.txt</param>
+        /// <returns>The contents of the input file as a string</returns>
+        /// <exception cref="FileNotFoundException">Thrown if the input file cannot be found</exception>
+        internal static string ReadInputFile(int year = 0, int day = 0, bool useTest = false)
+        {
+            string fileName = useTest ? $"Day{day}Test.txt" : $"Day{day}.txt";
+            
+            // Try multiple possible locations
+            var possiblePaths = new List<string>();
+            
+            // Get the directory where the executable is running from
+            var exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            
+            // Try relative to executable (for when running from bin/Debug/net6.0)
+            possiblePaths.Add(Path.Combine(exeDirectory, "..", "..", "..", year.ToString(), "Inputs", fileName));
+            possiblePaths.Add(Path.Combine(exeDirectory, "..", "..", "..", "..", year.ToString(), "Inputs", fileName));
+            possiblePaths.Add(Path.Combine(exeDirectory, "..", "..", "..", "..", "..", year.ToString(), "Inputs", fileName));
+            
+            // Try relative to current working directory (for when running from project root)
+            var currentDir = Directory.GetCurrentDirectory();
+            possiblePaths.Add(Path.Combine(currentDir, year.ToString(), "Inputs", fileName));
+            possiblePaths.Add(Path.Combine(currentDir, "advent-of-code", year.ToString(), "Inputs", fileName));
+            
+            // Try to find project root by looking for .csproj file
+            var searchDir = currentDir;
+            for (int i = 0; i < 5; i++)
+            {
+                var csprojPath = Path.Combine(searchDir, "aoc.csproj");
+                if (File.Exists(csprojPath))
+                {
+                    possiblePaths.Add(Path.Combine(searchDir, "advent-of-code", year.ToString(), "Inputs", fileName));
+                    break;
+                }
+                searchDir = Path.GetDirectoryName(searchDir) ?? searchDir;
+                if (string.IsNullOrEmpty(searchDir) || searchDir == Path.GetPathRoot(searchDir))
+                    break;
+            }
+            
+            foreach (var path in possiblePaths.Distinct())
+            {
+                try
+                {
+                    var normalizedPath = Path.GetFullPath(path);
+                    if (File.Exists(normalizedPath))
+                    {
+                        return File.ReadAllText(normalizedPath).TrimEnd('\r', '\n');
+                    }
+                }
+                catch
+                {
+                    // Continue to next path if this one is invalid
+                }
+            }
+            
+            throw new FileNotFoundException($"Could not find input file: {fileName} for year {year}, day {day}. Searched in: {string.Join(", ", possiblePaths.Distinct().Select(p => Path.GetFullPath(p)))}");
+        }
+
         internal static List<string> StringToLines(string str)
         {
             return str.Split("\r\n").ToList();
