@@ -1,13 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 
-if (args.Length < 3)
-{
-    Console.WriteLine("Usage: <year> <day> <part> [--test]");
-    Console.WriteLine("Example: 2025 1 1 --test");
-    return 1;
-}
-
 if (!int.TryParse(args[0], out int year))
 {
     Console.WriteLine($"Invalid year: {args[0]}");
@@ -29,7 +22,6 @@ if (!int.TryParse(args[2], out int part) || (part != 1 && part != 2))
 bool useTest = args.Contains("--test");
 
 var clock = new Stopwatch();
-clock.Start();
 
 try
 {
@@ -57,7 +49,9 @@ try
     }
     
     // Invoke the method with useTest parameter
+    clock.Start();
     object? result = method.Invoke(null, new object[] { useTest });
+    clock.Stop();
     
     if (result == null)
     {
@@ -65,7 +59,7 @@ try
         return 1;
     }
     
-    clock.Stop();
+    
     
     Console.WriteLine($"Answer: {result}");
     Console.WriteLine($"Time: {clock.ElapsedMilliseconds}ms");

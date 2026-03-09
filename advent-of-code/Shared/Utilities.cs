@@ -127,14 +127,14 @@
             return true;
         }
 
-        internal static int CalculateManhattanDistance((int x, int y) start, (int x, int y) end)
+        internal static long CalculateManhattanDistance((long x, long y) start, (long x, long y) end)
         {
             return Math.Abs(start.x - end.x) + Math.Abs(start.y - end.y);
         }
 
-        internal static long CalculateManhattanDistance((long x, long y) start, (long x, long y) end)
+        internal static long CalculateEuclideanDistance3D((long x, long y, long z) start, (long x, long y, long z) end)
         {
-            return Math.Abs(start.x - end.x) + Math.Abs(start.y - end.y);
+            return (long)Math.Sqrt(Math.Pow(start.x - end.x, 2) + Math.Pow(start.y - end.y, 2) + Math.Pow(start.z - end.z, 2));
         }
 
         internal static string RepeatString(string s, int count)
